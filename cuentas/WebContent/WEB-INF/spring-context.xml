@@ -25,6 +25,14 @@
 			</list>
 		</property>
 	</bean>
+
+
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:file:cuentas.db" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>	
 		
 	
 </beans>
