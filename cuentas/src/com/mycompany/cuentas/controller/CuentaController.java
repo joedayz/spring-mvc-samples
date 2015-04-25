@@ -2,10 +2,11 @@ package com.mycompany.cuentas.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mycompany.cuentas.dao.CuentaDAO;
 import com.mycompany.cuentas.modelo.Cuenta;
@@ -31,7 +32,12 @@ public class CuentaController {
 	
 	
 	
-	
+	@RequestMapping("/pagarCuenta")
+	public void pagar(Long id, HttpServletResponse response){
+		CuentaDAO dao = new CuentaDAO();
+		dao.pagar(id);
+		response.setStatus(200);
+	}
 	
 	
 	
@@ -64,12 +70,11 @@ public class CuentaController {
 	}
 	
 	@RequestMapping("/listarCuentas")
-	public ModelAndView listar() {
+	public String listar(Model model) {
 		CuentaDAO dao = new CuentaDAO();
 		List<Cuenta> cuentas = dao.listar();
-		ModelAndView mv = new ModelAndView("cuenta/lista");
-		mv.addObject("cuentas", cuentas);
-		return mv;
+		model.addAttribute("cuentas", cuentas);
+		return "cuenta/lista";
 	}
 
 }
