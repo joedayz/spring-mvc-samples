@@ -12,7 +12,7 @@
         <security:intercept-url pattern="/" access="permitAll" />
         <security:intercept-url pattern="/protected/**" access="isAuthenticated()" />
 
-        <security:form-login login-page="/login" authentication-failure-url="/login?error=403" default-target-url="/protected/home" />
+        <security:form-login login-page="/login" authentication-failure-url="/login?error=401" default-target-url="/protected/home" />
 
         <security:logout invalidate-session="true" logout-success-url="/login" logout-url="/logout" />
     </security:http>

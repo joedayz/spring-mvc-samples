@@ -35,11 +35,14 @@
     </bean>
 
     <!-- i18n -->
+    
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="WEB-INF/i18n"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
+    
+    
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
         <property name="defaultLocale" value="en"/>
     </bean>
