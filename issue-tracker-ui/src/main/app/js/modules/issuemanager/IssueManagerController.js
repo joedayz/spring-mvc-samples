@@ -43,5 +43,16 @@ IssueTrackerApp.module('IssueManager',
   //crear la instancia
   var controller = new IssueManagerController();
 
+  //Cuando el modulo se inicialice hay que establecerle la contraladora
+
+  IssueManager.addInitializer(function(){
+  	logger.debug("IssueManager initializer");
+  	var router = new IssueManagerRouter({
+  		controller: controller
+  	});
+
+  });
+
+
 });
 
