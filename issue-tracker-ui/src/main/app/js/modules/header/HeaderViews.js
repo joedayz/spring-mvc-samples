@@ -8,4 +8,4 @@ IssueTrackerApp.module('Header',
 
  });
 
- });
+});
