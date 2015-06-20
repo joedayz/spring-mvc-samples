@@ -8,7 +8,7 @@ IssueTrackerApp.addRegions({
 	headerRegion : '#header-region',
 	mainRegion : '#main-region',
 	dialogRegion : '#dialog-region',
-	footerRegion : '#footer-region',
+	footerRegion : '#footer-region'
 });
 
 // Eventos de la aplicacion
