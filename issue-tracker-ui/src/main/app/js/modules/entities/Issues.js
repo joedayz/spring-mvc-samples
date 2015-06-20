@@ -27,14 +27,12 @@
 				}	
 			});
 			return defer.promise();
-		};	
-
-		//Crear una instancia de la controladora
-		var issueController = new IssueEntityController()
-
+		}	
 
 	});
 
+	//Crear una instancia de la controladora
+	var issueController = new IssueEntityController();
 
 	//Manejar el request para una collection of Issue Entities
 	IssueTrackerApp.reqres.setHandler('issue:entities', function(){
