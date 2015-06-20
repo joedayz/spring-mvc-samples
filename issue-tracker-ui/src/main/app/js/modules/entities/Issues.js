@@ -11,7 +11,7 @@
 	Entities.IssueCollection = Backbone.Collection.extend({
 
 		model: Entities.Issue,
-		url: 'http://localhost:8080/issues'
+		url: 'http://localhost:48080/issues'
 
 	});
 
@@ -22,7 +22,7 @@
 			var issues = new Entities.IssueCollection();
 			var defer = $.Deferred();
 			issues.fetch({
-				success: funcion(data){
+				success: function(data){
 					defer.resolve(data);		
 				}	
 			});

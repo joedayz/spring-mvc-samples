@@ -8,6 +8,20 @@ Backbone.Marionette.Renderer.render =  function(template,data){
 
 window.IssueTrackerApp = new Backbone.Marionette.Application();
 
+
+// Navigate to a route
+IssueTrackerApp.navigate = function(route, options) {
+  logger.debug("IssueTrackerApp.navigate route:" + route);
+  options = options || {};
+  Backbone.history.navigate(route, options);
+};
+
+// Retrieve the current route
+IssueTrackerApp.getCurrentRoute = function() {
+  return Backbone.history.fragment;
+};
+
+
 //Crear las 4 regiones
 
 IssueTrackerApp.addRegions({
@@ -23,6 +37,10 @@ IssueTrackerApp.addRegions({
 IssueTrackerApp.on('start', function(options) {
 	logger.debug("Backbone.history.start");
 	Backbone.history.start();
+
+	if(IssueTrackerApp.getCurrentRoute() === ''){
+		IssueTrackerApp.execute('issuemanager:list');
+	}
 });
 
 //Iniciar la aplicacion

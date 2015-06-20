@@ -53,6 +53,14 @@ IssueTrackerApp.module('IssueManager',
 
   });
 
+  IssueTrackerApp.commands.setHandler('issumanager:list', function(collection){
+  	logger.debug("Handling 'issuemanager:list' command");
+  	IssueTrackerApp.navigate('issues');
+  	controller.list(collection);
+
+  });
+
+
 
 });
 
