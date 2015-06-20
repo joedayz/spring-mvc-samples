@@ -1,3 +1,9 @@
+//Personalizar el Render para usar Namespace
+Backbone.Marionette.Renderer.render =  function(template,data){
+	return IssueTrackerTemplates[template](data);
+};
+
+
 //Creamos la aplicacion
 
 window.IssueTrackerApp = new Backbone.Marionette.Application();
