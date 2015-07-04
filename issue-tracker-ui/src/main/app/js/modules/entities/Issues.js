@@ -5,6 +5,30 @@
 
  	Entities.Issue = Backbone.Model.extend({
 
+ 		urlRoot: 'http://localhost:8080/issues',
+
+ 		defaults: {
+      		status: 'OPEN'
+    	},
+
+	   validate: function(attrs, options) {
+	      var errors = {};
+	      if (!attrs.title) {
+	        errors.title = 'Title is required.';
+	      }
+	      if (!attrs.description) {
+	        errors.description = 'Description is required.';
+	      }
+	      if (!attrs.type) {
+	        errors.type = 'Type is required.';
+	      }
+	      if (!attrs.priority) {
+	        errors.priority = 'Priority is required.';
+	      }
+	      if (! _.isEmpty(errors)) {
+	        return errors;
+	      }
+	    }    	
 
  	});
 
