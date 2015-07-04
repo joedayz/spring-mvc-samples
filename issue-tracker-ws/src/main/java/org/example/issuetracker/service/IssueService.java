@@ -7,4 +7,6 @@ import org.example.issuetracker.model.Issue;
 public interface IssueService {
 
 	List<Issue> findAll();
+	
+	Issue create(Issue issue);
 }

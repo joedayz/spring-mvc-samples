@@ -3,6 +3,8 @@ package org.example.issuetracker.service;
 import java.util.List;
 
 import org.example.issuetracker.model.Issue;
+import org.example.issuetracker.model.IssuePriority;
+import org.example.issuetracker.model.IssueStatus;
 import org.example.issuetracker.repository.IssueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,5 +29,29 @@ public class IssueServiceBean implements IssueService {
 		logger.info("< findAll");
 		return issues;
 	}
+
+	@Override
+	public Issue create(Issue issue) {
+		logger.info("> create");
+		
+		//establecer atributo por defecto
+		issue.setStatus(IssueStatus.OPEN);
+		
+		if(issue.getPriority()==null){
+			issue.setPriority(IssuePriority.MEDIUM);
+		}
+		
+		//persistimos la entidad
+		Issue persistedIssue = issueRepository.save(issue);
+		
+		logger.info("< create");
+		return persistedIssue;
+	}
+	
+	
+	
+	
+	
+	
 
 }
