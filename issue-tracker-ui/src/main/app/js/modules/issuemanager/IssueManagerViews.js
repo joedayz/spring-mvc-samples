@@ -102,7 +102,19 @@ IssueTrackerApp.module('IssueManager',
 
 
 
+   // Define the View for a Single Issue
+  IssueManager.IssueView = Backbone.Marionette.ItemView.extend({
 
+    className: 'container-fluid',
+
+    template: 'issueview',
+
+    triggers: {
+      'click .js-list': 'issue:list',
+      'click .js-edit': 'issue:edit'
+    }
+
+  });
 
 
 
