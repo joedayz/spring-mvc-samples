@@ -9,4 +9,6 @@ public interface IssueService {
 	List<Issue> findAll();
 	
 	Issue create(Issue issue);
+	
+	Issue find(Long id);
 }

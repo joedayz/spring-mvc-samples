@@ -47,6 +47,16 @@ public class IssueServiceBean implements IssueService {
 		logger.info("< create");
 		return persistedIssue;
 	}
+
+	@Override
+	public Issue find(Long id) {
+		logger.info("> 	find id:{}", id);
+		
+		Issue issue = issueRepository.findOne(id);
+		
+		logger.info("< find id:[]", id);
+		return issue;
+	}
 	
 	
 	
