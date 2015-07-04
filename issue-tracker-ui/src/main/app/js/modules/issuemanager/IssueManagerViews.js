@@ -16,7 +16,12 @@ IssueTrackerApp.module('IssueManager',
 
     tagName: 'tr',
 
-    template: 'issuelistitem'
+    template: 'issuelistitem',
+
+    triggers: {
+        'click .js-view': 'issue:view'
+    }
+
 
 	});
 

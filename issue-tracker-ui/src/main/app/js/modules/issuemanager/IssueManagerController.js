@@ -6,8 +6,8 @@ IssueTrackerApp.module('IssueManager',
   var IssueManagerRouter = Marionette.AppRouter.extend({
 
     appRoutes: {
-      'issues': 'list'//,  //http://host[:port]/[path/]page.html[#hash][?param=value]
-      //'issues/:id': 'view'
+      'issues': 'list',  //http://host[:port]/[path/]page.html[#hash][?param=value]
+      'issues/:id': 'view'
     }
 
 
@@ -75,7 +75,35 @@ IssueTrackerApp.module('IssueManager',
 
       logger.debug("Show IssueAddView in IssueTrackerApp.mainRegion");
       IssueTrackerApp.mainRegion.show(addIssueView);
+    },
+
+    view: function(id, model, collection) {
+      logger.debug("IssueManagerController.view id:" + id);
+
+      var displayView = function(issueModel, issueCollection) {
+        var issueView = new IssueManager.IssueView({
+          model: issueModel
+        });
+
+        issueView.on('issue:list', function(args) {
+          logger.debug("Handling 'issue:list' event");
+          IssueTrackerApp.execute('issuemanager:list', issueCollection);
+        });
+
+        logger.debug("Show IssueView in IssueTrackerApp.mainRegion");
+        IssueTrackerApp.mainRegion.show(issueView);
+      };
+
+      if(model) {
+        displayView(model, collection);
+      } else {
+        var fetchingIssue = IssueTrackerApp.request('issue:entity', id);
+        $.when(fetchingIssue).done(function(issue) {
+          displayView(issue, collection);
+        });
+      }
     }
+
 
 
   });
@@ -103,6 +131,12 @@ IssueTrackerApp.module('IssueManager',
   IssueTrackerApp.commands.setHandler('issuemanager:add', function() {
     logger.debug("Handling 'issuemanager:add' command");
     controller.add();
+  });
+
+  IssueTrackerApp.commands.setHandler('issuemanager:view', function(id, model, collection) {
+    logger.debug("Handling 'issuemanager:view' command");
+    IssueTrackerApp.navigate('issues/' + id);
+    controller.view(id, model, collection);
   });
 
 
