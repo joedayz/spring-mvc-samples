@@ -80,7 +80,6 @@ public class IssueController {
 	@RequestMapping(
 		value="/issues/{id}",
 		method=RequestMethod.GET ,
-		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE		
 			
 			)
