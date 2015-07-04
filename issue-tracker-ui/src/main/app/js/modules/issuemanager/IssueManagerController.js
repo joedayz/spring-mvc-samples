@@ -6,7 +6,8 @@ IssueTrackerApp.module('IssueManager',
   var IssueManagerRouter = Marionette.AppRouter.extend({
 
     appRoutes: {
-      'issues': 'list'  //http://host[:port]/[path/]page.html[#hash][?param=value]
+      'issues': 'list'//,  //http://host[:port]/[path/]page.html[#hash][?param=value]
+      //'issues/:id': 'view'
     }
 
 
@@ -24,19 +25,58 @@ IssueTrackerApp.module('IssueManager',
 
         	logger.debug("Show IssueListView in IssueTrackerApp.mainRegion");
         	
-			IssueTrackerApp.mainRegion.show(listView);
-		};
-		
-		if(collection){
-			displayListView(collection);
-		}else{
-			var fetchingIssues = IssueTrackerApp.request('issue:entities');
-			$.when(fetchingIssues).done(function(issues) {
-          		displayListView(issues);
-        	});
-		}
+			     IssueTrackerApp.mainRegion.show(listView);
+		    };
 
-      }
+
+		
+    		if(collection){
+    			displayListView(collection);
+    		}else{
+    			var fetchingIssues = IssueTrackerApp.request('issue:entities');
+    			$.when(fetchingIssues).done(function(issues) {
+              		displayListView(issues);
+            	});
+    		}
+
+      },
+
+      add: function() {
+      logger.debug("IssueManagerController.add");
+      var addIssueView = new IssueManager.IssueAddView();
+
+      // Handle 'form:cancel' event
+      addIssueView.on('form:cancel', function() {
+        logger.debug("Handling 'form:cancel' event");
+        IssueTrackerApp.execute('issuemanager:list');
+      });
+
+      // Handle 'form:submit' trigger
+      addIssueView.on('form:submit', function(data) {
+        logger.debug("Handling 'form:submit' event");
+        logger.debug("form data:" + JSON.stringify(data));
+        var issueModel = new IssueTrackerApp.Entities.Issue();
+        if(issueModel.save(data,
+          {
+            success: function() {
+              IssueTrackerApp.execute('issuemanager:view', issueModel.get('id'), issueModel);
+            },
+            error: function() {
+              alert('An unexpected problem has occurred.');
+            }
+          })
+         ) {
+          // validation successful
+        } else {
+          // handle validation errors
+          addIssueView.triggerMethod('form:validation:failed', issueModel.validationError);
+        }
+      });
+
+      logger.debug("Show IssueAddView in IssueTrackerApp.mainRegion");
+      IssueTrackerApp.mainRegion.show(addIssueView);
+    }
+
 
   });
 
