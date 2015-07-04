@@ -51,7 +51,21 @@
 				}	
 			});
 			return defer.promise();
-		}	
+		},
+
+	    getIssue: function(issueId) {
+	      logger.debug("IssueEntityController.getIssue");
+	      var issue = new Entities.Issue({ id: issueId });
+	      var defer = $.Deferred();
+	      issue.fetch({
+	        success: function(data) {
+	          defer.resolve(data);
+	        }
+	      });
+	      return defer.promise();
+	    }		
+
+
 
 	});
 
@@ -63,6 +77,12 @@
 		logger.debug("Manejando request issue:entities");
 		return issueController.getIssues();
 	});
+
+	  // Handle request for an Issue Model
+	  IssueTrackerApp.reqres.setHandler('issue:entity', function(id) {
+	    logger.debug("Handling 'issue:entity' request");
+	    return issueController.getIssue(id);
+	  });
 
 
 
