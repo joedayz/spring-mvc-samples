@@ -100,6 +100,10 @@ IssueTrackerApp.module('IssueManager',
 
   });
 
+  IssueTrackerApp.commands.setHandler('issuemanager:add', function() {
+    logger.debug("Handling 'issuemanager:add' command");
+    controller.add();
+  });
 
 
 });
