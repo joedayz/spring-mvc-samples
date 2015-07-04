@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,6 +76,39 @@ public class IssueController {
 		logger.info("< createIssue");
 		return new ResponseEntity<Issue>(createdIssue, HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(
+		value="/issues/{id}",
+		method=RequestMethod.GET ,
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE		
+			
+			)
+	public ResponseEntity<Issue> getIssue(@PathVariable("id") Long id){
+		logger.info("> getIssue");
+		
+		Issue issue = null;
+		
+		try{
+			issue = issueService.find(id);
+			if(issue==null){
+				return new ResponseEntity<Issue>(HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception ex){
+			logger.error("Unexprected exception caught", ex);
+			return new ResponseEntity<Issue>(issue, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		logger.info("< getIssue");
+		return new ResponseEntity<Issue>(issue, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
