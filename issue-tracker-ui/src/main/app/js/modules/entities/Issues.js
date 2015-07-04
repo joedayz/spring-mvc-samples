@@ -5,7 +5,7 @@
 
  	Entities.Issue = Backbone.Model.extend({
 
- 		urlRoot: 'http://localhost:8080/issues',
+ 		urlRoot: 'http://localhost:28080/issues',
 
  		defaults: {
       		status: 'OPEN'
@@ -35,7 +35,7 @@
 	Entities.IssueCollection = Backbone.Collection.extend({
 
 		model: Entities.Issue,
-		url: 'http://localhost:48080/issues'
+		url: 'http://localhost:28080/issues'
 
 	});
 

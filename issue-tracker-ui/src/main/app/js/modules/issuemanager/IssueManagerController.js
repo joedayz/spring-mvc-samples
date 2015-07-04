@@ -59,7 +59,7 @@ IssueTrackerApp.module('IssueManager',
         if(issueModel.save(data,
           {
             success: function() {
-              IssueTrackerApp.execute('issuemanager:view', issueModel.get('id'), issueModel);
+              IssueTrackerApp.execute('issuemanager:list');
             },
             error: function() {
               alert('An unexpected problem has occurred.');
@@ -93,7 +93,7 @@ IssueTrackerApp.module('IssueManager',
 
   });
 
-  IssueTrackerApp.commands.setHandler('issumanager:list', function(collection){
+  IssueTrackerApp.commands.setHandler('issuemanager:list', function(collection){
   	logger.debug("Handling 'issuemanager:list' command");
   	IssueTrackerApp.navigate('issues');
   	controller.list(collection);
