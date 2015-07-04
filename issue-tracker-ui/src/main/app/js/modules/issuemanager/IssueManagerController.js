@@ -23,6 +23,12 @@ IssueTrackerApp.module('IssueManager',
           	collection: issueCollection
         	});
 
+        listView.on('childview:issue:view', function(args) {
+          logger.debug("Handling 'childview:issue:view' event");
+          IssueTrackerApp.execute('issuemanager:view', args.model.get('id'), args.model, issueCollection);
+        });
+
+
         	logger.debug("Show IssueListView in IssueTrackerApp.mainRegion");
         	
 			     IssueTrackerApp.mainRegion.show(listView);

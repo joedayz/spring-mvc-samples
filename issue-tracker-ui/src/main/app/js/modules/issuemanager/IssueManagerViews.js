@@ -19,7 +19,7 @@ IssueTrackerApp.module('IssueManager',
     template: 'issuelistitem',
 
     triggers: {
-        'click .js-view': 'issue:view'
+      'click .js-view': 'issue:view'
     }
 
 
