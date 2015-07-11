@@ -14,18 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class IssueServiceBean implements IssueService {
 
-	private Logger logger =
-			LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private IssueRepository issueRepository;
-	
+
 	@Override
 	public List<Issue> findAll() {
-		
+
 		logger.info("> findAll");
-		
+
 		List<Issue> issues = issueRepository.findAll();
-		
+
 		logger.info("< findAll");
 		return issues;
 	}
@@ -33,17 +32,17 @@ public class IssueServiceBean implements IssueService {
 	@Override
 	public Issue create(Issue issue) {
 		logger.info("> create");
-		
-		//establecer atributo por defecto
+
+		// establecer atributo por defecto
 		issue.setStatus(IssueStatus.OPEN);
-		
-		if(issue.getPriority()==null){
+
+		if (issue.getPriority() == null) {
 			issue.setPriority(IssuePriority.MEDIUM);
 		}
-		
-		//persistimos la entidad
+
+		// persistimos la entidad
 		Issue persistedIssue = issueRepository.save(issue);
-		
+
 		logger.info("< create");
 		return persistedIssue;
 	}
@@ -51,17 +50,21 @@ public class IssueServiceBean implements IssueService {
 	@Override
 	public Issue find(Long id) {
 		logger.info("> 	find id:{}", id);
-		
+
 		Issue issue = issueRepository.findOne(id);
-		
+
 		logger.info("< find id:[]", id);
 		return issue;
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public Issue update(Issue issue) {
+		logger.info("> update");
+
+		Issue updatedIssue = issueRepository.save(issue);
+
+		logger.info("< update");
+		return updatedIssue;
+	}
 
 }

@@ -23,6 +23,13 @@ IssueTrackerApp.module('IssueManager',
           	collection: issueCollection
         	});
 
+
+        // Handle 'issue:edit' events triggered by Child Views
+        listView.on('childview:issue:edit', function(args) {
+          logger.debug("Handling 'childview:issue:edit' event");
+          IssueTrackerApp.execute('issuemanager:edit', args.model.get('id'), args.model, issueCollection);
+        });
+
         listView.on('childview:issue:view', function(args) {
           logger.debug("Handling 'childview:issue:view' event");
           IssueTrackerApp.execute('issuemanager:view', args.model.get('id'), args.model, issueCollection);
@@ -81,6 +88,56 @@ IssueTrackerApp.module('IssueManager',
 
       logger.debug("Show IssueAddView in IssueTrackerApp.mainRegion");
       IssueTrackerApp.mainRegion.show(addIssueView);
+    },
+
+   edit: function(id, model, collection) {
+      logger.debug("IssueManagerController.edit");
+
+      var displayEditView = function(issueModel, issueCollection) {
+        var editIssueView = new IssueManager.IssueEditView({
+          model: issueModel
+        });
+
+        // Handle 'form:cancel' event
+        editIssueView.on('form:cancel', function() {
+          logger.debug("Handling 'form:cancel' event");
+          IssueTrackerApp.execute('issuemanager:view', id, issueModel, issueCollection);
+        });
+
+        // Handle 'form:submit' event
+        editIssueView.on('form:submit', function(data) {
+          logger.debug("Handling 'form:submit' event");
+          logger.debug("form data:" + JSON.stringify(data));
+          if(issueModel.save(data,
+            {
+              success: function() {
+                IssueTrackerApp.execute('issuemanager:view', id, issueModel, issueCollection);
+              },
+              error: function() {
+                alert('An unexpected problem has occurred.');
+              }
+            })
+           ) {
+            // validation successful
+          } else {
+            // handle validation errors
+            editIssueView.triggerMethod('form:validation:failed', issueModel.validationError);
+          }
+        });
+
+        logger.debug("Show IssueEditView in IssueTrackerApp.mainRegion");
+        IssueTrackerApp.mainRegion.show(editIssueView);
+      };
+
+      if(model) {
+        displayEditView(model, collection);
+      } else {
+        var fetchingIssue = IssueTrackerApp.request('issue:entity', id);
+        $.when(fetchingIssue).done(function(issue) {
+          displayEditView(issue, collection);
+        });
+      }
+
     },
 
     view: function(id, model, collection) {
@@ -144,6 +201,12 @@ IssueTrackerApp.module('IssueManager',
     IssueTrackerApp.navigate('issues/' + id);
     controller.view(id, model, collection);
   });
+
+  IssueTrackerApp.commands.setHandler('issuemanager:edit', function(id, model, collection) {
+    logger.debug("Handling 'issuemanager:edit' command");
+    controller.edit(id, model, collection);
+  });
+
 
 
 });

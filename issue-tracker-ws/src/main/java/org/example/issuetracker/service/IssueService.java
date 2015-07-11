@@ -11,4 +11,6 @@ public interface IssueService {
 	Issue create(Issue issue);
 	
 	Issue find(Long id);
+	
+	Issue update(Issue issue);
 }

@@ -17,100 +17,96 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class IssueController {
 
-	private Logger logger =
-			LoggerFactory.getLogger(this.getClass());
-	
-	@Autowired  //se debe trabajar con la interface
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	// se debe trabajar con la interface
 	private IssueService issueService;
-	
-	@RequestMapping(
-			value="/issues",
-			method= RequestMethod.GET,
-			produces=MediaType.APPLICATION_JSON_VALUE  //Otro mediatypes es 405
-			)
-	public ResponseEntity<List<Issue>> getAllIssues(){
+
+	@RequestMapping(value = "/issues", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE // Otro
+																												// mediatypes
+																												// es
+																												// 405
+	)
+	public ResponseEntity<List<Issue>> getAllIssues() {
 		logger.info("> getAllIssues");
 		List<Issue> issues = null;
-		
-		try{
+
+		try {
 			issues = issueService.findAll();
-			if(issues==null){
+			if (issues == null) {
 				issues = new ArrayList<Issue>();
 			}
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			logger.error("Ocurrio una exception.", e);
-			return new ResponseEntity<List<Issue>>
-				(issues, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Issue>>(issues,
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
+
 		logger.info("< getAllIssues");
-		return new ResponseEntity<List<Issue>> (issues, HttpStatus.OK);
+		return new ResponseEntity<List<Issue>>(issues, HttpStatus.OK);
 	}
-	
-	@RequestMapping(
-			value="/issues",
-			method= RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE
-			)
-	public ResponseEntity<Issue> createIssue(@RequestBody Issue issue){
+
+	@RequestMapping(value = "/issues", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Issue> createIssue(@RequestBody Issue issue) {
 		logger.info("> createIssue");
-		
+
 		Issue createdIssue = null;
-		
-		try{
+
+		try {
 			createdIssue = issueService.create(issue);
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			logger.error("Unexpected exception caught.", ex);
 			return new ResponseEntity<Issue>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
-		
+
 		logger.info("< createIssue");
 		return new ResponseEntity<Issue>(createdIssue, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(
-		value="/issues/{id}",
-		method=RequestMethod.GET ,
-		produces = MediaType.APPLICATION_JSON_VALUE		
-			
-			)
-	public ResponseEntity<Issue> getIssue(@PathVariable("id") Long id){
+
+	@RequestMapping(value = "/issues/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE
+
+	)
+	public ResponseEntity<Issue> getIssue(@PathVariable("id") Long id) {
 		logger.info("> getIssue");
-		
+
 		Issue issue = null;
-		
-		try{
+
+		try {
 			issue = issueService.find(id);
-			if(issue==null){
+			if (issue == null) {
 				return new ResponseEntity<Issue>(HttpStatus.NOT_FOUND);
 			}
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			logger.error("Unexprected exception caught", ex);
-			return new ResponseEntity<Issue>(issue, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Issue>(issue,
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		logger.info("< getIssue");
 		return new ResponseEntity<Issue>(issue, HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@RequestMapping(value = "/issues/{id}", method = RequestMethod.PUT, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Issue> updateIssue(@RequestBody Issue issue) {
+		logger.info("> updateIssue");
+
+		Issue updatedIssue = null;
+		try {
+			updatedIssue = issueService.update(issue);
+		} catch (Exception e) {
+			logger.error("Unexpected Exception caught.", e);
+			return new ResponseEntity<Issue>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		logger.info("< updateIssue");
+		return new ResponseEntity<Issue>(updatedIssue, HttpStatus.OK);
+	}
+
 }
