@@ -10,3 +10,6 @@ CREATE DATABASE IF NOT EXISTS issuetracker;
  `description` varchar(2000) DEFAULT NULL,
  PRIMARY KEY (`id`)
  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ 
+CREATE USER 'issueuser'@'localhost' IDENTIFIED BY 'issuepass';
+GRANT ALL ON issuetracker.* TO 'issueuser'@'localhost';
