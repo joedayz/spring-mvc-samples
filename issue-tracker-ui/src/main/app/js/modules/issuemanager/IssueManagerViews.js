@@ -24,7 +24,8 @@ IssueTrackerApp.module('IssueManager',
 
     triggers: {
       'click .js-view': 'issue:view',
-      'click .js-edit': 'issue:edit'
+      'click .js-edit': 'issue:edit',
+      'click .js-delete': 'issue:delete'
     }
 
 

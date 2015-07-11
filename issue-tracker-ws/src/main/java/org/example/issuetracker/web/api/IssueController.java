@@ -91,9 +91,7 @@ public class IssueController {
 		return new ResponseEntity<Issue>(issue, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/issues/{id}", method = RequestMethod.PUT, 
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/issues/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Issue> updateIssue(@RequestBody Issue issue) {
 		logger.info("> updateIssue");
 
@@ -109,4 +107,18 @@ public class IssueController {
 		return new ResponseEntity<Issue>(updatedIssue, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/issues/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Issue> deleteIssue(@PathVariable("id") Long issueId) {
+		logger.info("> deleteIssue");
+
+		try {
+			issueService.delete(issueId);
+		} catch (Exception e) {
+			logger.error("Unexpected Exception caught.", e);
+			return new ResponseEntity<Issue>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		logger.info("< deleteIssue");
+		return new ResponseEntity<Issue>(HttpStatus.NO_CONTENT);
+	}
 }

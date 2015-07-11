@@ -36,6 +36,31 @@ IssueTrackerApp.module('IssueManager',
         });
 
 
+        // Handle 'issue:delete' events triggered by Child Views
+        listView.on('childview:issue:delete', function(args) {
+          logger.debug("Handling 'childview:issue:delete' event");
+          var dialogView = new IssueTrackerApp.Common.DialogView({
+            title: "Delete Issue?",
+            body: "Click confirm to permanently delete this issue.",
+            primary: "Confirm",
+            secondary: "Cancel"
+          });
+
+          dialogView.on("primary", function() {
+            logger.debug("Handling 'primary' dialog event");
+            args.model.destroy();
+            dialogView.triggerMethod('hide');
+          });
+
+          dialogView.on("secondary", function() {
+            logger.debug("Handling 'secondary' dialog event");
+            dialogView.triggerMethod('hide');
+          });
+
+          IssueTrackerApp.dialogRegion.show(dialogView);
+        });
+        
+
         	logger.debug("Show IssueListView in IssueTrackerApp.mainRegion");
         	
 			     IssueTrackerApp.mainRegion.show(listView);

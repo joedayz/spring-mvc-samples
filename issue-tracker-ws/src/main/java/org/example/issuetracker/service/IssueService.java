@@ -13,4 +13,6 @@ public interface IssueService {
 	Issue find(Long id);
 	
 	Issue update(Issue issue);
+	
+	void delete(Long id);
 }
