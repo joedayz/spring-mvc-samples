@@ -51,3 +51,17 @@ INSERT INTO `system_user` (`id`, `email`, `enabled`, `name`, `password`, `user_r
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+
+
+
+//en el server.xml
+
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" 
+	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="34" maxActive="377" 
+	maxIdle="233" minEvictableIdleTimeMillis="55000" minIdle="89" name="jdbc/tomcatDataSource"
+	 password="password" removeAbandoned="true" removeAbandonedTimeout="55" testOnBorrow="true"
+	  timeBetweenEvictionRunsMillis="34000" type="javax.sql.DataSource" 
+	  url="jdbc:mysql://localhost:3306/uaiContacts?allowMultiQueries=true"
+	   username="root" validationInterval="34000" validationQuery="SELECT 1"/>
