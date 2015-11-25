@@ -1,0 +1,9 @@
+Bootstrap v3.2.0
+Font Awesome v4.2.0
+Backbone Marionette v2.2.1
+Backbone. Syphon v0.5.0
+Backbone v1.1.2
+Underscore v1.7.0
+jQuery v1.11.1
+log4javascript v1.4.10
+json2

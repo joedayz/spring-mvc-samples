@@ -26,10 +26,8 @@ public class IssueController {
 	// se debe trabajar con la interface
 	private IssueService issueService;
 
-	@RequestMapping(value = "/issues", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE // Otro
-																												// mediatypes
-																												// es
-																												// 405
+	@RequestMapping(value = "/issues", method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE 														// 405
 	)
 	public ResponseEntity<List<Issue>> getAllIssues() {
 		logger.info("> getAllIssues");
