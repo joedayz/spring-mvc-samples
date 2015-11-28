@@ -41,12 +41,15 @@ public class ContactsController {
         return new ModelAndView("contactsList");
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> listAll(@RequestParam int page, Locale locale) {
+    @RequestMapping(method = RequestMethod.GET,
+    		produces = "application/json")
+    public ResponseEntity<?> listAll(@RequestParam int page,
+    		Locale locale) {
         return createListAllResponse(page, locale);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, 
+    		produces = "application/json")
     public ResponseEntity<?> create(@ModelAttribute("contact") Contact contact,
                                     @RequestParam(required = false) String searchFor,
                                     @RequestParam(required = false, defaultValue = DEFAULT_PAGE_DISPLAYED_TO_USER) int page,
@@ -60,7 +63,8 @@ public class ContactsController {
         return createListAllResponse(page, locale, "message.create.success");
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
+    @RequestMapping(value = "/{id}", 
+    		method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<?> update(@PathVariable("id") int contactId,
                                     @RequestBody Contact contact,
                                     @RequestParam(required = false) String searchFor,
@@ -79,7 +83,8 @@ public class ContactsController {
         return createListAllResponse(page, locale, "message.update.success");
     }
 
-    @RequestMapping(value = "/{contactId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = "/{contactId}",
+    		method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> delete(@PathVariable("contactId") int contactId,
                                     @RequestParam(required = false) String searchFor,
                                     @RequestParam(required = false, defaultValue = DEFAULT_PAGE_DISPLAYED_TO_USER) int page,
