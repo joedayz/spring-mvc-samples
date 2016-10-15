@@ -5,3 +5,8 @@ target/
 # Git Ignore Specification for this Directory
 dist/
 node_modules/
+
+.idea
+.classpath
+.project
+.settings/
